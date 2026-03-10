@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pilem/models/movie.dart';
 import 'package:pilem/screens/detail_screen.dart';
+import 'package:pilem/screens/favorite_screen.dart';
 import 'package:pilem/services/api_services.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -45,6 +46,19 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Pilem"),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.favorite),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const FavoriteScreen(),
+                ),
+              );
+            },
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -63,7 +77,6 @@ class _HomeScreenState extends State<HomeScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Menampilkan Title Kategori Movies
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
@@ -74,44 +87,44 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ),
-        //Menapilkan thumnail dan judul movies
         SizedBox(
           height: 200,
           child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: movies.length,
-              itemBuilder: (BuildContext build, int index) {
-                final Movie movie = movies[index];
-                return GestureDetector(
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => DetailScreen(movie: movie),
-                    ),
+            scrollDirection: Axis.horizontal,
+            itemCount: movies.length,
+            itemBuilder: (BuildContext build, int index) {
+              final Movie movie = movies[index];
+              return GestureDetector(
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DetailScreen(movie: movie),
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: [
-                        Image.network(
-                          "https://image.tmdb.org/t/p/w500${movie.posterPath}",
-                          width: 100,
-                          height: 150,
-                          fit: BoxFit.cover,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      Image.network(
+                        "https://image.tmdb.org/t/p/w500${movie.posterPath}",
+                        width: 100,
+                        height: 150,
+                        fit: BoxFit.cover,
+                      ),
+                      Text(
+                        movie.title.length > 14
+                            ? '${movie.title.substring(0, 10)}...'
+                            : movie.title,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
                         ),
-                        Text(
-                          movie.title.length > 14
-                              ? '${movie.title.substring(0, 10)}...'
-                              : movie.title,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                );
-              }),
+                ),
+              );
+            },
+          ),
         )
       ],
     );
