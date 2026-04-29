@@ -1,1 +1,29 @@
-{"installed":{"client_id":"1040332741349-ctiag7ejabvvqlqtmut3qm5r69l3kqne.apps.googleusercontent.com","project_id":"robust-catalyst-492106-s2","auth_uri":"https://accounts.google.com/o/oauth2/auth","token_uri":"https://oauth2.googleapis.com/token","auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs"}}
+{
+  "project_info": {
+    "project_number": "263750555834",
+    "project_id": "cepuapp-78c79",
+    "storage_bucket": "cepuapp-78c79.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:263750555834:android:d8995ed537c1dbab954a83",
+        "android_client_info": {
+          "package_name": "com.company.cepuapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2mQfRq0wIoGn56tCbwB9CgNACUTHRh60"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

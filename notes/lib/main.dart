@@ -34,6 +34,8 @@ class MyApp extends StatelessWidget {
 }
 
 class NoteListScreenHome extends StatefulWidget {
+  const NoteListScreenHome({super.key});
+
   @override
   State<NoteListScreenHome> createState() => _NoteListScreenHomeState();
 }

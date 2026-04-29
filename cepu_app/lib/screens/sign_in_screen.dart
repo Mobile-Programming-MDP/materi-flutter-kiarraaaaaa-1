@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cepu_app/screens/home_screen.dart';
-import 'package:cepu_app/screens/sign_up_screen.dart';
-import 'package:flutter/foundation.dart'; // 🔥 buat kIsWeb
+
+import 'package:cepu_app/screens/home_screen.dart' as home;
+import 'package:cepu_app/screens/sign_up_screen.dart' as signup;
 
 class SignInScreen extends StatefulWidget {
-  const SignInScreen({Key? key}) : super(key: key);
+  const SignInScreen({super.key});
 
   @override
   State<SignInScreen> createState() => _SignInScreenState();
@@ -22,7 +23,6 @@ class _SignInScreenState extends State<SignInScreen> {
     super.dispose();
   }
 
-  // ================= EMAIL/PASSWORD LOGIN =================
   Future<void> _loginWithEmail() async {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -33,39 +33,47 @@ class _SignInScreenState extends State<SignInScreen> {
       if (mounted) {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (_) => const HomeScreen()),
+          MaterialPageRoute(
+            builder: (_) => const home.HomeScreen(),
+          ),
         );
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Login gagal: $e')),
+        SnackBar(
+          content: Text('Login gagal: $e'),
+        ),
       );
     }
   }
 
-  // ================= GOOGLE LOGIN (FIX WEB) =================
   Future<void> _loginWithGoogle() async {
     try {
       if (kIsWeb) {
-        // 🔥 WEB
-        GoogleAuthProvider authProvider = GoogleAuthProvider();
+        GoogleAuthProvider provider = GoogleAuthProvider();
 
-        await FirebaseAuth.instance.signInWithPopup(authProvider);
+        await FirebaseAuth.instance.signInWithPopup(provider);
       } else {
-        // 🔥 ANDROID / IOS
-        // kalau mau support mobile nanti baru tambahin lagi google_sign_in
-        throw Exception("Google Sign-In mobile belum di-setup");
+        throw Exception(
+          "Google Sign-In mobile belum di-setup",
+        );
       }
 
       if (mounted) {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (_) => const HomeScreen()),
+          MaterialPageRoute(
+            builder: (_) => const home.HomeScreen(),
+          ),
         );
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Google Sign-In gagal: $e')),
+        SnackBar(
+          content: Text(
+            'Google Sign-In gagal: $e',
+          ),
+        ),
       );
     }
   }
@@ -73,15 +81,15 @@ class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Sign In')),
+      appBar: AppBar(
+        title: const Text('Sign In'),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: SingleChildScrollView(
           child: Column(
             children: [
               const SizedBox(height: 20),
-
-              // 🔹 Email
               TextField(
                 controller: _emailController,
                 decoration: const InputDecoration(
@@ -90,8 +98,6 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
               ),
               const SizedBox(height: 16),
-
-              // 🔹 Password
               TextField(
                 controller: _passwordController,
                 obscureText: true,
@@ -101,8 +107,6 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
               ),
               const SizedBox(height: 20),
-
-              // 🔹 Email/Password Login
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
@@ -110,33 +114,33 @@ class _SignInScreenState extends State<SignInScreen> {
                   child: const Text('Sign In'),
                 ),
               ),
-
               const SizedBox(height: 16),
-
-              // 🔹 Google Login
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton.icon(
                   onPressed: _loginWithGoogle,
                   icon: const Icon(Icons.login),
-                  label: const Text('Sign In dengan Google'),
+                  label: const Text(
+                    'Sign In dengan Google',
+                  ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.redAccent,
                   ),
                 ),
               ),
-
               const SizedBox(height: 16),
-
-              // 🔹 Pindah ke SignUp
               TextButton(
                 onPressed: () {
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (_) => const SignUpScreen()),
+                    MaterialPageRoute(
+                      builder: (_) => signup.SignUpScreen(),
+                    ),
                   );
                 },
-                child: const Text('Belum punya akun? Daftar'),
+                child: const Text(
+                  'Belum punya akun? Daftar',
+                ),
               ),
             ],
           ),
